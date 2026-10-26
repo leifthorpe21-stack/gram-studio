@@ -15,7 +15,7 @@
 <title>Gram Studio</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" integrity="sha384-+mbV2IY1Zk/X1p/nWllGySJSUN8uMs+gUAN10Or95UBH0fpj6GfKgPmgC5EXieXG" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <style>
-:root{--bg:#ffffff;--stage:#f1f1ef;--ink:#000;--muted:#7a7a7a;--line:#000;--hair:#e3e3e0;--field:#f4f4f2;--signal:#ff2a1a;--btn:#000;--btnText:#fff;--thumbbg:#eaeae7;--igbg:#fff;--igink:#000;--igmuted:#737373;--igline:#dbdbdb;--igph:#efefef}
+:root{--bg:#ffffff;--stage:#f1f1ef;--ink:#000;--muted:#7a7a7a;--line:#000;--hair:#e3e3e0;--field:#f4f4f2;--signal:#d40920;--btn:#000;--btnText:#fff;--thumbbg:#eaeae7;--igbg:#fff;--igink:#000;--igmuted:#737373;--igline:#dbdbdb;--igph:#efefef}
 :root[data-theme="dark"]{--bg:#0d0d0d;--stage:#171717;--ink:#fff;--muted:#8d8d8d;--line:#fff;--hair:#262626;--field:#1a1a1a;--btn:#fff;--btnText:#000;--thumbbg:#222;--igbg:#000;--igink:#fff;--igmuted:#a8a8a8;--igline:#262626;--igph:#1c1c1c}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0d0d0d;--stage:#171717;--ink:#fff;--muted:#8d8d8d;--line:#fff;--hair:#262626;--field:#1a1a1a;--btn:#fff;--btnText:#000;--thumbbg:#222;--igbg:#000;--igink:#fff;--igmuted:#a8a8a8;--igline:#262626;--igph:#1c1c1c}}
 *{box-sizing:border-box}
@@ -320,11 +320,63 @@ kbd{border-radius:5px;background:var(--field);border-color:var(--hair);font-size
 /* focus + motion */
 button:focus-visible{outline:none;box-shadow:var(--ring)}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
+
+/* ===== color: Mondrian primaries for modes and actions ===== */
+:root{--mred:#d40920;--mredDeep:#b00718;--mblue:#1f4e9a;--mblueDeep:#173d7a;--myellow:#f7d117;--myellowDeep:#e2bd05;--myellowInk:#a88a00;--mgreen:#1e8e4b;--mgreenDeep:#17733c;--accent:var(--mblue);--accentInk:var(--mblue)}
+html[data-mode="carousel"]{--accent:var(--mblue);--accentInk:var(--mblue)}
+html[data-mode="grid"]{--accent:var(--mred);--accentInk:var(--mred)}
+html[data-mode="collage"]{--accent:var(--myellow);--accentInk:var(--myellowInk)}
+:root[data-theme="dark"]{--myellowInk:#f2cf3a}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--myellowInk:#f2cf3a}}
+/* mode tint */
+.tabs button{border-bottom-width:3px}
+.tabs button.active{border-bottom-color:var(--accent)}
+.tabs button.active span{color:var(--accentInk)}
+h3 em{color:var(--accentInk);font-weight:600}
+.layouts button.active{box-shadow:0 0 0 2.5px var(--accent)}
+#sheet .grip{background:var(--accent)}
+#mtabs button[data-pane="edit"].active{color:var(--accentInk)}
+#empty .steps div:nth-child(1) b{color:var(--mblue)}#empty .steps div:nth-child(2) b{color:var(--mred)}#empty .steps div:nth-child(3) b{color:var(--myellowInk)}
+/* wordmark block */
+.mark{display:inline-grid;grid-template-columns:10px 6px;grid-template-rows:9px 6px;gap:1.5px;margin-right:9px;vertical-align:-2px}
+.mark i{display:block;background:var(--ink)}.mark i:nth-child(1){background:var(--mred)}.mark i:nth-child(2){background:var(--mblue)}.mark i:nth-child(4){background:var(--myellow)}
+/* actions */
+#exportBtn{background:var(--mred);border-color:var(--mred);color:#fff;box-shadow:0 1px 2px rgba(212,9,32,.3)}
+#exportBtn:hover{background:var(--mredDeep);border-color:var(--mredDeep)}
+#mtabs button[data-pane="export"].active{color:var(--mred)}
+#txtAdd{background:var(--myellow);border-color:var(--myellow);color:#000}
+#txtAdd:hover{background:var(--myellowDeep);border-color:var(--myellowDeep);color:#000}
+.presets button:hover{background:var(--myellow);border-color:var(--myellow);color:#000}
+.tl.active{box-shadow:0 0 0 2px var(--myellow)}
+#mtabs button[data-pane="text"].active{color:var(--myellowInk)}
+.drop:hover,.drop.over{background:var(--mblue);border-color:var(--mblue);color:#fff}
+.drop:hover strong,.drop.over strong{color:#fff}
+.thumb.active{box-shadow:0 0 0 2.5px var(--mblue),0 0 0 4.5px var(--bg)}
+#mtabs button[data-pane="photos"].active{color:var(--mblue)}
+#phoneBtn{background:var(--mgreen);color:#fff}
+#phoneBtn:hover{background:var(--mgreenDeep)}
+#mPreview.active{color:var(--mgreen)}
+.pside .btn{background:var(--mgreen);border-color:var(--mgreen);color:#fff}
+#projExport,#projDup{border-color:transparent}
+#wipeAll{color:var(--mred)}#wipeAll:hover{background:var(--mred);color:#fff}
+.tl button:hover,.thumb .x:hover{color:#fff;background:var(--mred)}
+/* status */
+#saveState::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--hair);margin-right:6px;vertical-align:0;transition:background .3s}
+#saveState[data-state="Saved"]::before{background:var(--mgreen)}
+#saveState[data-state="Editing"]::before{background:var(--myellow)}
+#saveState[data-state="Not saved"]::before{background:var(--mred)}
+#toast{padding-left:14px}
+#toast::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--mblue);margin-right:10px;vertical-align:1px}
+#toast[data-kind="ok"]::before{background:var(--mgreen)}
+#toast[data-kind="err"]::before{background:var(--mred)}
+#toast[data-kind="warn"]::before{background:var(--myellow)}
+/* seg active label picks up the mode tint on the mode-defining controls */
+#carStyle button.active,#gridRatio button.active,#colRatio button.active,#carRatio button.active{color:var(--accentInk)}
 </style>
 </head>
 <body>
 <header>
-  <div class="wordmark">Gram Studio<small>Instagram layout tool</small></div>
+  <div class="wordmark"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Gram Studio<small>Instagram layout tool</small></div>
   <nav class="tabs">
     <button data-mode="carousel" class="active"><span>01</span>Carousel</button>
     <button data-mode="grid"><span>02</span>Grid</button>
@@ -506,8 +558,10 @@ button:focus-visible{outline:none;box-shadow:var(--ring)}
       </div>
     </div>
     <div class="foot" id="foot">
+      <div class="row" id="destRow" hidden style="margin-top:0"><label>Save to</label><div class="seg" id="dest" style="width:190px"><button data-v="share" class="active">Photos</button><button data-v="download">Files</button></div></div>
       <div class="row" style="margin-top:0"><label>Format</label><select id="fmt"><option value="jpg">JPEG</option><option value="png">PNG</option></select><input type="range" id="qual" min="60" max="100" value="95" style="width:80px" title="JPEG quality"><output id="qualO">95</output></div>
       <button class="btn" id="exportBtn">Export slides</button>
+      <p class="note" id="destNote" hidden>Opens the share sheet: tap <b>Save Image</b> or <b>Save Images</b> to put them straight in your camera roll, in order.</p>
     </div>
   </aside>
 </main>
@@ -530,7 +584,7 @@ button:focus-visible{outline:none;box-shadow:var(--ring)}
 <div id="toast"></div>
 
 <script>
-const VERSION='1.4.0';
+const VERSION='1.5.0';
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); // every user-supplied string that goes into innerHTML passes through this
 window.addEventListener('error',e=>{ console.error(e.error||e.message); toast('Something went wrong: '+(e.message||'unknown error')); });
@@ -570,7 +624,7 @@ const modeState=()=>state.mode==='carousel'?state.car:state.mode==='grid'?state.
 const textHost=()=>state.mode==='carousel'&&state.car.surf!=='main'&&state.car[state.car.surf].on?state.car[state.car.surf]:modeState();
 const selText=()=>{const m=textHost();return m.texts[m.selT]||null;};
 const extraPhoto=ex=>{const p=ex.photo>=0?state.photos[ex.photo]:state.photos[state.active]; return p&&p.ready?p:null;};
-let toastT; function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('on'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('on'),2600); }
+let toastT; function toast(msg,kind){ const t=$('#toast'); t.textContent=msg; t.dataset.kind=kind||(/fail|could not|wrong|full|over 80|only image|not a |cannot|skipped/i.test(msg)?'err':/exported|imported|saved|deleted|applied|restored|opened|duplicated|added/i.test(msg)?'ok':'info'); t.classList.add('on'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('on'),2600); }
 
 /* ---------- theme ---------- */
 const root=document.documentElement;
@@ -636,7 +690,7 @@ function removePhoto(i){
 /* ---------- modes / controls ---------- */
 const EXPORT_LABEL={carousel:'Export slides',grid:'Export tiles',collage:'Export collage'};
 function setMode(m){
-  state.mode=m;
+  state.mode=m; root.dataset.mode=m;
   $$('.tabs button').forEach(x=>x.classList.toggle('active',x.dataset.mode===m));
   $$('.panel').forEach(p=>p.classList.toggle('active',p.id==='panel-'+m));
   $('#libHint').textContent=m==='collage'?'Click a cell, then a photo. Or drag photos onto cells.':'Click a photo to use it.';
@@ -731,6 +785,11 @@ range('cellZoom',v=>{ const c=state.col.cells[state.col.sel]; if(c)c.zoom=v; },z
 $('#cellClear').onclick=()=>{ const c=state.col.cells[state.col.sel]; if(c){c.photo=-1;c.px=0;c.py=0;c.zoom=1;} draw(); };
 // export settings
 $('#fmt').onchange=e=>{state.fmt=e.target.value; $('#qual').disabled=state.fmt==='png';};
+// where exports go: the share sheet (saves to the camera roll on phones) when the browser can share files, otherwise a download
+const canShareFiles=(()=>{ try{ return !!(navigator.canShare&&navigator.canShare({files:[new File([new Blob([new Uint8Array([0])],{type:'image/jpeg'})],'t.jpg',{type:'image/jpeg'})]})); }catch(e){ return false; } })();
+let dest=canShareFiles&&matchMedia('(hover:none)').matches?'share':'download';
+if(canShareFiles){ $('#destRow').hidden=false; setSeg('dest',dest); $('#destNote').hidden=dest!=='share'; }
+seg('dest',v=>{ dest=v; $('#destNote').hidden=v!=='share'; });
 $('#qual').oninput=e=>{state.qual=+e.target.value;$('#qualO').textContent=state.qual;};
 $('#exportBtn').onclick=()=>({carousel:exportCarousel,grid:exportGrid,collage:exportCollage})[state.mode]();
 
@@ -836,10 +895,10 @@ function drawTexts(c,texts,W,H,sel=-1){
       if(t.shadow){c.shadowColor='rgba(0,0,0,.65)';c.shadowBlur=t.shadow;c.shadowOffsetY=t.shadow/3;}
       if(t.stroke){c.lineWidth=t.stroke;c.strokeStyle=t.strokeColor;c.lineJoin='round';c.strokeText(l,tx,y);}
       c.fillStyle=t.color; c.fillText(l,tx,y); c.shadowColor='transparent'; });
-    if(i===sel){ c.globalAlpha=1; c.setLineDash([10,8]); c.strokeStyle='#ff2a1a'; c.lineWidth=4; c.strokeRect(b.left-b.pad,b.top-b.pad*.7,b.w+2*b.pad,b.h+1.4*b.pad); }
+    if(i===sel){ c.globalAlpha=1; c.setLineDash([10,8]); c.strokeStyle='#d40920'; c.lineWidth=4; c.strokeRect(b.left-b.pad,b.top-b.pad*.7,b.w+2*b.pad,b.h+1.4*b.pad); }
     c.restore();
   });
-  if(guides&&guides.host===texts){ c.save(); c.strokeStyle='#ff2a1a'; c.lineWidth=2; c.setLineDash([14,10]); c.beginPath();
+  if(guides&&guides.host===texts){ c.save(); c.strokeStyle='#d40920'; c.lineWidth=2; c.setLineDash([14,10]); c.beginPath();
     if(guides.x!=null){ c.moveTo(guides.x*W,-H); c.lineTo(guides.x*W,2*H); } if(guides.y!=null){ c.moveTo(-W,guides.y*H); c.lineTo(2*W,guides.y*H); } c.stroke(); c.restore(); }
 }
 let guides=null;
@@ -941,7 +1000,7 @@ function drawSplit(W,H,g,st,kind){
   ctx.fillStyle=root.dataset.theme==='dark'?'rgba(0,0,0,.7)':'rgba(241,241,239,.78)';
   ctx.fillRect(dx,dy,dw,cy-dy); ctx.fillRect(dx,cy+ch,dw,dy+dh-cy-ch); ctx.fillRect(dx,cy,cx-dx,ch); ctx.fillRect(cx+cw,cy,dx+dw-cx-cw,ch);
   ctx.strokeStyle='rgba(255,255,255,.9)'; ctx.lineWidth=1; ctx.setLineDash([5,4]);
-  if(g.zoomStyle){ for(let i=1;i<g.n;i++){ const sr=tileSrc(g,i,0); ctx.strokeRect(dx+sr.x*s,dy+sr.y*s,sr.w*s,sr.h*s); } ctx.setLineDash([]); ctx.fillStyle='#ff2a1a'; ctx.beginPath(); ctx.arc(dx+(g.x+g.w*state.car.fx)*s,dy+(g.y+g.h*state.car.fy)*s,4,0,7); ctx.fill(); }
+  if(g.zoomStyle){ for(let i=1;i<g.n;i++){ const sr=tileSrc(g,i,0); ctx.strokeRect(dx+sr.x*s,dy+sr.y*s,sr.w*s,sr.h*s); } ctx.setLineDash([]); ctx.fillStyle='#d40920'; ctx.beginPath(); ctx.arc(dx+(g.x+g.w*state.car.fx)*s,dy+(g.y+g.h*state.car.fy)*s,4,0,7); ctx.fill(); }
   else {
   for(let i=1;i<g.cols;i++){ctx.beginPath();ctx.moveTo(cx+i*cw/g.cols,cy);ctx.lineTo(cx+i*cw/g.cols,cy+ch);ctx.stroke();}
   for(let i=1;i<g.rows;i++){ctx.beginPath();ctx.moveTo(cx,cy+i*ch/g.rows);ctx.lineTo(cx+cw,cy+i*ch/g.rows);ctx.stroke();}
@@ -974,7 +1033,7 @@ function drawSplit(W,H,g,st,kind){
       drawExtra(ctx,ex,g.sw,g.sh,state.car.surf===sl.kind?ex.selT:-1);
     }
     ctx.restore();
-    if(sl.kind!=='main'&&state.car.surf===sl.kind){ ctx.strokeStyle='#ff2a1a'; ctx.lineWidth=2; ctx.strokeRect(sl.x-3,sl.y-3,sw+6,sh+6); }
+    if(sl.kind!=='main'&&state.car.surf===sl.kind){ ctx.strokeStyle='#d40920'; ctx.lineWidth=2; ctx.strokeRect(sl.x-3,sl.y-3,sw+6,sh+6); }
   });
   ctx.font='600 10px "Helvetica Neue",Helvetica,Arial,sans-serif'; ctx.textAlign='center'; ctx.fillStyle=css('--muted');
   slots.forEach(sl=>{
@@ -995,7 +1054,7 @@ function renderCollage(c,W,H,preview){
     c.save();
     if(st.tilt){ const cx=rc.x+rc.w/2, cy=rc.y+rc.h/2; c.translate(cx,cy); c.rotate(st.tilt*Math.PI/180); c.translate(-cx,-cy); }
     const outline=drawMaskedCell(c,rc,st,p,i,preview);
-    if(preview&&i===state.col.sel){ c.save(); if(st.mask==='torn'||st.mask==='polaroid'||st.mask==='film'){ c.beginPath(); c.rect(rc.x,rc.y,rc.w,rc.h); } else outline(); c.strokeStyle='#ff2a1a'; c.lineWidth=6; c.stroke(); c.restore(); }
+    if(preview&&i===state.col.sel){ c.save(); if(st.mask==='torn'||st.mask==='polaroid'||st.mask==='film'){ c.beginPath(); c.rect(rc.x,rc.y,rc.w,rc.h); } else outline(); c.strokeStyle='#d40920'; c.lineWidth=6; c.stroke(); c.restore(); }
     c.restore();
   });
 }
@@ -1004,7 +1063,7 @@ function drawCollage(W,H){
   const s=Math.min((W-2*pad)/cw,(H-2*pad)/ch), ox=(W-cw*s)/2, oy=(H-ch*s)/2;
   ctx.save(); ctx.shadowColor='rgba(0,0,0,.18)'; ctx.shadowBlur=24; ctx.shadowOffsetY=6; ctx.fillStyle='#fff'; ctx.fillRect(ox,oy,cw*s,ch*s); ctx.restore();
   ctx.save(); ctx.translate(ox,oy); ctx.scale(s,s); renderCollage(ctx,cw,ch,true); ctx.beginPath(); ctx.rect(0,0,cw,ch); ctx.clip(); drawTexts(ctx,state.col.texts,cw,ch,state.col.selT);
-  if(state.col.safe&&state.col.ratio==='9:16'){ ctx.fillStyle='rgba(255,42,26,.14)'; ctx.fillRect(0,0,cw,250); ctx.fillRect(0,ch-340,cw,340); ctx.strokeStyle='rgba(255,42,26,.8)'; ctx.setLineDash([12,10]); ctx.lineWidth=3; ctx.beginPath(); ctx.moveTo(0,250); ctx.lineTo(cw,250); ctx.moveTo(0,ch-340); ctx.lineTo(cw,ch-340); ctx.stroke(); ctx.fillStyle='rgba(255,42,26,.9)'; ctx.font='500 28px "Helvetica Neue",Helvetica,Arial,sans-serif'; ctx.fillText('Profile + buttons cover these zones in Stories',40,ch-340+56); }
+  if(state.col.safe&&state.col.ratio==='9:16'){ ctx.fillStyle='rgba(212,9,32,.14)'; ctx.fillRect(0,0,cw,250); ctx.fillRect(0,ch-340,cw,340); ctx.strokeStyle='rgba(212,9,32,.8)'; ctx.setLineDash([12,10]); ctx.lineWidth=3; ctx.beginPath(); ctx.moveTo(0,250); ctx.lineTo(cw,250); ctx.moveTo(0,ch-340); ctx.lineTo(cw,ch-340); ctx.stroke(); ctx.fillStyle='rgba(212,9,32,.9)'; ctx.font='500 28px "Helvetica Neue",Helvetica,Arial,sans-serif'; ctx.fillText('Profile + buttons cover these zones in Stories',40,ch-340+56); }
   ctx.restore();
   view={kind:'collage',s,ox,oy,cw,ch};
   const sel=state.col.cells[state.col.sel]; if(sel){$('#cellZoom').value=sel.zoom;$('#cellZoomO').textContent=zoomFmt(sel.zoom); setSeg('cellFit',sel.fit?1:0); setSeg('cellMask',sel.mask||'none'); setR('cellTilt',sel.tilt||0,v=>v+'°');}
@@ -1139,7 +1198,7 @@ function syncUI(){ // push state into every control, then redraw through setMode
 let idbP=null, project={id:null,name:'Untitled'}, saveT;
 function idb(){ return idbP??=new Promise((res,rej)=>{ if(!window.indexedDB)return rej(new Error('no idb')); const r=indexedDB.open('gram-studio',1); r.onupgradeneeded=()=>r.result.createObjectStore('projects',{keyPath:'id'}); r.onsuccess=()=>res(r.result); r.onerror=()=>rej(r.error); }); }
 const txp=(mode,fn)=>idb().then(d=>new Promise((res,rej)=>{ const t=d.transaction('projects',mode), rq=fn(t.objectStore('projects')); t.oncomplete=()=>res(rq&&rq.result); t.onerror=()=>rej(t.error); }));
-function setSaved(txt){ $('#saveState').textContent=txt; }
+function setSaved(txt){ const el=$('#saveState'); el.textContent=txt; el.dataset.state=txt; }
 function scheduleSave(){ if(restoring)return; clearTimeout(saveT); setSaved('Editing'); saveT=setTimeout(saveProject,1200); }
 async function saveProject(){
   if(!state.photos.length&&!project.id)return setSaved('');
@@ -1290,6 +1349,10 @@ async function deliver(items,zipName,what){
   const btn=$('#exportBtn'); btn.disabled=true; const old=btn.textContent; btn.textContent='Exporting…';
   try{
     const blobs=await Promise.all(items.map(i=>blobOf(i.canvas)));
+    if(dest==='share'&&canShareFiles){
+      const type=state.fmt==='png'?'image/png':'image/jpeg', files=items.map((it,i)=>new File([blobs[i]],it.name,{type}));
+      if(navigator.canShare({files})){ try{ await navigator.share({files,title:'Gram Studio'}); toast(what,'ok'); return; }catch(e){ if(e&&e.name==='AbortError')return; toast('Sharing failed, downloading instead','warn'); } }
+    }
     if(items.length>1&&window.JSZip){ const z=new JSZip(); items.forEach((it,i)=>z.file(it.name,blobs[i])); await saveBlob(await z.generateAsync({type:'blob'}),zipName+'.zip'); }
     else for(let i=0;i<items.length;i++){ await saveBlob(blobs[i],items[i].name); await sleep(400); }
     toast(what);
@@ -1355,7 +1418,7 @@ $('#sheetClose').onclick=closeSheet;
     if(dy>70){ sh.classList.contains('tall')?sh.classList.remove('tall'):closeSheet(); } else if(dy<-70){ sh.classList.add('tall'); } else if(!e.target.closest('#sheetClose')){ sh.classList.toggle('tall'); } });
 })();
 mobileMQ.addEventListener('change',applyLayout);
-refreshSurfUI(); refreshTextUI(); renderLibrary(); applyLayout();
+root.dataset.mode=state.mode; refreshSurfUI(); refreshTextUI(); renderLibrary(); applyLayout();
 hist=[DEFAULT]; hi=0;
 if('serviceWorker' in navigator&&location.protocol==='https:'&&document.querySelector('link[rel=manifest]')) navigator.serviceWorker.register('sw.js').catch(()=>{});
 (async()=>{ try{ const id=localStorage.getItem('gs-current'); if(id&&await loadProject(id)) toast('Restored '+project.name); }catch(e){} })();

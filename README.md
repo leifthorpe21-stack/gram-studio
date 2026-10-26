@@ -10,11 +10,12 @@ A layout tool for Instagram: seamless carousels, profile-grid splits, collages, 
 - **Text** – layers with presets, fonts, outline, shadow, backdrops, snapping; captions can run across slides.
 - **Phone preview** – feed post with swipe, profile grid, or story view.
 - **Projects** – autosaved in the browser (IndexedDB), export and import as a `.gramstudio.zip` for backups or another device, undo/redo, light and dark themes, JPEG or PNG export.
+- **Colour** – a Mondrian-inspired system: each mode has a colour (Carousel blue, Grid red, Collage yellow); Export is red, text tools yellow, photos blue, preview green.
 - **Installable** – the hosted build is a PWA: add it to a phone's home screen and it works offline.
 
 ## Run it
 
-Open `docs/index.html` in a modern browser (Chrome, Edge, Safari 17+, Firefox). Everything is local. On a phone, open a hosted copy in the browser and add it to the home screen. The preview fills the screen and a bottom bar (Photos, Edit, Text, Export, Preview) opens a sliding sheet with just those controls; pull the handle up for a taller sheet or down to dismiss it. Pinch zooms a crop or a collage cell, and exports go to the share sheet or Files. Looks (filters) need Safari 18 or Chrome; older Safari previews and exports without them.
+Open `docs/index.html` in a modern browser (Chrome, Edge, Safari 17+, Firefox). Everything is local. On a phone, open a hosted copy in the browser and add it to the home screen. The preview fills the screen and a bottom bar (Photos, Edit, Text, Export, Preview) opens a sliding sheet with just those controls; pull the handle up for a taller sheet or down to dismiss it. Pinch zooms a crop or a collage cell. On phones, Export opens the share sheet so "Save Images" puts the slides straight into the camera roll; choose Files instead to download a zip. Looks (filters) need Safari 18 or Chrome; older Safari previews and exports without them.
 
 ## Host it
 
