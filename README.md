@@ -44,13 +44,16 @@ Bump `VERSION` in the source when you release.
 
 ## Privacy and security notes
 
+See [SECURITY.md](SECURITY.md) for the threat model. In short:
+
 - No network requests are made by the app itself. The source file fetches one script from cdnjs (with SRI); the release build makes none.
 - Projects, including photo files, are stored in the browser's IndexedDB for that origin only. "About" in the app shows storage use and offers a one-click delete of all data.
 - All user-supplied strings (file names, project names, captions) are escaped before entering HTML.
 - Everything read from storage or an imported project file is rebuilt from defaults with type checks and clamped ranges; unknown fields are dropped. Imported zips are limited to 80 photos of up to 80 MB each, with file paths restricted to a `photos/` folder.
 - Photos larger than 3600 px on the long edge are downscaled in memory on import (the original file is still stored and exported), which keeps phones from running out of memory.
 - Exports are rendered fresh on a canvas and carry no EXIF metadata.
-- Images are decoded by the browser only; the app accepts image MIME types up to 80 MB, up to 80 photos per project.
+- The hosted build includes a frame guard, and `scripts/security_check.py` runs in CI on every push.
+- Images are decoded by the browser only; the app accepts raster image types (no SVG) up to 80 MB, up to 80 photos per project.
 - Not affiliated with Instagram or Meta. The phone preview uses generic icons.
 
 ## License

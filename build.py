@@ -22,6 +22,10 @@ if not tag:
     sys.exit('zip library script tag not found')
 html = html[:tag.start()] + '<script>' + lib.decode('utf-8') + '</script>' + html[tag.end():]
 
+# hosted build only: refuse to run inside another site's frame (clickjacking); meta CSP cannot express frame-ancestors
+FRAME_GUARD = "<script>if(self!==top){try{top.location.replace(location.href)}catch(e){document.documentElement.style.display='none'}}</script>"
+html = html.replace('<meta charset="UTF-8">', '<meta charset="UTF-8">' + FRAME_GUARD, 1)
+
 hashes = []
 for m in re.finditer(r'<script>(.*?)</script>', html, re.S):
     hashes.append("'sha256-" + base64.b64encode(hashlib.sha256(m.group(1).encode('utf-8')).digest()).decode() + "'")

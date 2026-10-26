@@ -2,7 +2,7 @@
 <html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-rMfkFFWoB2W1/Zx+4bgHim0WC7vKRVrq6FTeZclH1Z4=' 'sha256-W1NJ9JNNBumheBU/CrZrOgj10drDx//VcH1mjo4axEM='; style-src 'unsafe-inline'; img-src 'self' blob: data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-xO9ddCUpJ36ANlUEan9n0lwEnEmvqdvCKnCe7lCCF48=' 'sha256-rMfkFFWoB2W1/Zx+4bgHim0WC7vKRVrq6FTeZclH1Z4=' 'sha256-lMisFh+IesDYcG7XU1YH77gdUTUfvjHmAHdEMMIk8EM='; style-src 'unsafe-inline'; img-src 'self' blob: data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'"><script>if(self!==top){try{top.location.replace(location.href)}catch(e){document.documentElement.style.display='none'}}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="referrer" content="no-referrer">
 <meta name="description" content="Gram Studio: seamless carousels, profile grid splits and collages for Instagram. Runs entirely in your browser; your photos never leave your device.">
@@ -597,7 +597,7 @@ h3 em{color:var(--accentInk);font-weight:600}
 <div id="toast"></div>
 
 <script>
-const VERSION='1.5.0';
+const VERSION='1.5.1';
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); // every user-supplied string that goes into innerHTML passes through this
 window.addEventListener('error',e=>{ console.error(e.error||e.message); toast('Something went wrong: '+(e.message||'unknown error')); });
@@ -654,8 +654,9 @@ drop.addEventListener('drop',e=>addFiles(e.dataTransfer.files));
 document.addEventListener('dragover',e=>e.preventDefault());
 document.addEventListener('drop',e=>{e.preventDefault(); if(e.target.closest('#stage')||e.target===drop) return; addFiles(e.dataTransfer.files);});
 function addFiles(files){
-  const all=[...files], list=all.filter(f=>f.type.startsWith('image/')&&f.size<=80*1024*1024);
-  if(all.length&&!list.length)return toast(all.some(f=>f.size>80*1024*1024)?'That file is over 80 MB':'Only image files can be added');
+  const okType=f=>/^image\/(jpeg|png|webp|gif|heic|heif|avif|bmp|tiff)$/.test(f.type); // raster only: SVG can carry scripts and taint the canvas
+  const all=[...files], list=all.filter(f=>okType(f)&&f.size<=80*1024*1024);
+  if(all.length&&!list.length)return toast(all.some(f=>f.size>80*1024*1024)?'That file is over 80 MB':'Only JPEG, PNG, WebP, GIF or HEIC photos can be added');
   if(list.length<all.length)toast(`${all.length-list.length} file${all.length-list.length===1?' was':'s were'} skipped (not an image, or over 80 MB)`);
   if(state.photos.length+list.length>80)return toast('Up to 80 photos per project');
   if(!list.length)return;
@@ -1260,13 +1261,13 @@ async function projectToZip(){
 }
 async function importProjectZip(blob){
   if(!window.JSZip)throw new Error('Zip support is not loaded');
-  if(blob.size>600*1024*1024)throw new Error('That file is over 600 MB');
+  if(blob.size>300*1024*1024)throw new Error('That file is over 300 MB');
   let z; try{ z=await JSZip.loadAsync(blob); }catch(e){ throw new Error('That file is not a zip archive'); } const meta=z.file('project.json'); if(!meta)throw new Error('Not a Gram Studio project (project.json missing)');
   let o; try{ o=JSON.parse(await meta.async('string')); }catch(e){ throw new Error('project.json is not valid JSON'); }
   if(!o||o.app!=='gram-studio')throw new Error('Not a Gram Studio project');
   const list=(Array.isArray(o.photos)?o.photos:[]).slice(0,80); const files=[];
   for(const ph of list){ const f=typeof ph?.file==='string'&&/^photos\/[\w.\-]+$/.test(ph.file)?z.file(ph.file):null; if(!f)continue; const b=await f.async('blob'); if(b.size>80*1024*1024)continue;
-    const name=vStr(ph.name,'photo',120).replace(/[\/\\]/g,'_'); files.push(new File([b],name,{type:b.type||'image/jpeg'})); }
+    const name=vStr(ph.name,'photo',120).replace(/[\/\\]/g,'_'); const type=/^image\/(jpeg|png|webp|gif|heic|heif|avif|bmp|tiff)$/.test(b.type)?b.type:'image/jpeg'; files.push(new File([b],name,{type})); }
   restoring=true; clearPhotos(); project={id:null,name:vStr(o.name,'Imported project',80)||'Imported project'}; $('#projName').value=project.name; $('#projNameM').value=project.name;
   await Promise.all(files.map(f=>new Promise(res=>{ const url=URL.createObjectURL(f), img=new Image(), entry={img,url,name:f.name,ready:false,blob:f}; state.photos.push(entry); img.onload=()=>{entry.img=workingImage(img);entry.ready=true;res();}; img.onerror=()=>{ const i=state.photos.indexOf(entry); if(i>=0){URL.revokeObjectURL(url);state.photos.splice(i,1);} res(); }; img.src=url; })));
   applySnap(sanitizeSnap(o.state)); hist=[snap()]; hi=0; restoring=false; renderLibrary(); draw(); scheduleSave();
