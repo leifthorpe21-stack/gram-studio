@@ -14,7 +14,7 @@ A layout tool for Instagram: seamless carousels, profile-grid splits, collages, 
 
 ## Run it
 
-Open `docs/index.html` in a modern browser (Chrome, Edge, Safari 17+, Firefox). Everything is local. On a phone, open the same file or a hosted copy in the browser; exports go to the share sheet or Files.
+Open `docs/index.html` in a modern browser (Chrome, Edge, Safari 17+, Firefox). Everything is local. On a phone, open a hosted copy in the browser and add it to the home screen; the stage stays pinned while the controls scroll, pinch zooms a crop or a collage cell, and exports go to the share sheet or Files. Looks (filters) need Safari 18 or Chrome; older Safari previews and exports without them.
 
 ## Host it
 

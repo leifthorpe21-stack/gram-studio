@@ -2,11 +2,14 @@
 <html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-rMfkFFWoB2W1/Zx+4bgHim0WC7vKRVrq6FTeZclH1Z4=' 'sha256-7ek7dJ+AaKHp3gJNJhNe6hP2yIfDFr1oC1LqYH6gcuM='; style-src 'unsafe-inline'; img-src 'self' blob: data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-rMfkFFWoB2W1/Zx+4bgHim0WC7vKRVrq6FTeZclH1Z4=' 'sha256-VNxJdG2d+2cGWlafrcfR0mFPAqHv+MRjZkr1RmU9mwc='; style-src 'unsafe-inline'; img-src 'self' blob: data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="referrer" content="no-referrer">
 <meta name="description" content="Gram Studio: seamless carousels, profile grid splits and collages for Instagram. Runs entirely in your browser; your photos never leave your device.">
 <meta name="theme-color" content="#000000">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Gram Studio">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="manifest" href="manifest.webmanifest">
@@ -31,10 +34,10 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html,body{margin:0;height:100%}
-body{display:flex;flex-direction:column;height:100vh;overflow:hidden;background:var(--bg);color:var(--ink);font:13px/1.45 "Neue Haas Grotesk Text Pro","Neue Haas Grotesk Display Pro","Helvetica Neue",Helvetica,Inter,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{display:flex;flex-direction:column;height:100vh;height:100dvh;overflow:hidden;touch-action:manipulation;background:var(--bg);color:var(--ink);font:13px/1.45 "Neue Haas Grotesk Text Pro","Neue Haas Grotesk Display Pro","Helvetica Neue",Helvetica,Inter,Arial,sans-serif;-webkit-font-smoothing:antialiased}
 button,select,input,textarea{font-family:inherit}
 .lbl{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-header{display:flex;align-items:center;gap:28px;padding:0 20px;height:54px;border-bottom:1px solid var(--line);flex:none}
+header{display:flex;align-items:center;gap:28px;padding:env(safe-area-inset-top) 20px 0;height:calc(54px + env(safe-area-inset-top));border-bottom:1px solid var(--line);flex:none}
 .wordmark{font-weight:700;font-size:15px;letter-spacing:-.02em;white-space:nowrap}
 .wordmark small{font-weight:400;color:var(--muted);margin-left:8px;font-size:11px;letter-spacing:.1em;text-transform:uppercase}
 .tabs{display:flex;gap:0;margin-left:auto;height:100%}
@@ -48,7 +51,7 @@ aside{background:var(--bg);overflow-y:auto;padding:18px 18px 24px}
 aside.left{border-right:1px solid var(--line)}
 aside.right{border-left:1px solid var(--line);padding:0;display:flex;flex-direction:column;overflow:hidden}
 aside.right .scroll{flex:1;overflow-y:auto;padding:18px}
-aside.right .foot{border-top:1px solid var(--line);padding:14px 18px;background:var(--bg)}
+aside.right .foot{border-top:1px solid var(--line);padding:14px 18px calc(14px + env(safe-area-inset-bottom));background:var(--bg)}
 h3{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);margin:0 0 12px;display:flex;align-items:baseline;gap:10px}
 h3 em{font-style:normal;color:var(--muted)}
 .sec{padding:16px 0;border-top:1px solid var(--hair)}
@@ -62,7 +65,7 @@ h3 em{font-style:normal;color:var(--muted)}
 #empty{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;text-align:center;padding:40px;cursor:pointer}
 #empty.hidden{display:none}
 #empty .big{font-size:clamp(28px,4vw,52px);font-weight:700;letter-spacing:-.03em;line-height:1;max-width:620px}
-#empty .steps{display:flex;gap:34px;color:var(--muted);font-size:12px}
+#empty .steps{display:flex;flex-wrap:wrap;justify-content:center;gap:18px 34px;color:var(--muted);font-size:12px}
 #empty .steps div b{display:block;color:var(--ink);font-size:11px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:4px}
 .drop{border:1px solid var(--line);padding:16px 10px;text-align:center;color:var(--muted);cursor:pointer;transition:.15s;font-size:12px}
 .drop strong{display:block;color:var(--ink);font-weight:600;margin-bottom:2px}
@@ -74,6 +77,7 @@ h3 em{font-style:normal;color:var(--muted)}
 .thumb.active{outline:2px solid var(--ink);outline-offset:-2px}
 .thumb .x{position:absolute;top:4px;right:4px;width:20px;height:20px;border-radius:50%;background:#000;color:#fff;border:0;font-size:12px;line-height:20px;cursor:pointer;display:none;padding:0}
 .thumb:hover .x{display:block}
+@media (hover:none){.thumb .x{display:block}}
 .thumb .n{position:absolute;left:6px;bottom:4px;font-size:10px;color:#fff;text-shadow:0 0 4px #000}
 .panel{display:none}.panel.active{display:block}
 .row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:9px 0}
@@ -85,7 +89,7 @@ input[type=color]{padding:0;width:34px;height:24px;border:1px solid var(--hair);
 input[type=color]::-webkit-color-swatch-wrapper{padding:2px}input[type=color]::-webkit-color-swatch{border:0}
 textarea{width:100%;background:var(--field);color:var(--ink);border:1px solid var(--hair);padding:8px;font-size:13px;resize:vertical;margin-bottom:8px}
 .seg{display:flex;border:1px solid var(--line)}
-.seg button{flex:1;background:none;border:0;border-right:1px solid var(--line);color:var(--muted);padding:7px 4px;cursor:pointer;font-size:11px;letter-spacing:.02em}
+.seg button{flex:1;min-width:0;background:none;border:0;border-right:1px solid var(--line);color:var(--muted);padding:7px 4px;cursor:pointer;font-size:11px;letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .seg button:last-child{border-right:0}
 .seg button.active{background:var(--ink);color:var(--bg)}
 .seg button:disabled{opacity:.3;cursor:not-allowed}
@@ -116,7 +120,7 @@ kbd{font:inherit;font-size:10px;border:1px solid var(--hair);padding:1px 5px;col
 #projName{background:none;border:0;border-bottom:1px solid transparent;color:var(--ink);font-size:13px;padding:4px 0;width:180px;outline:0}
 #projName:focus{border-bottom-color:var(--ink)}
 #saveState{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);min-width:46px}
-.pop{position:absolute;top:54px;right:16px;width:320px;background:var(--bg);border:1px solid var(--line);z-index:8;padding:14px;box-shadow:0 12px 40px rgba(0,0,0,.12)}
+.pop{position:absolute;top:calc(54px + env(safe-area-inset-top));right:16px;width:min(320px,92vw);background:var(--bg);border:1px solid var(--line);z-index:8;padding:14px;box-shadow:0 12px 40px rgba(0,0,0,.12)}
 .pop[hidden]{display:none}
 .pr{display:flex;align-items:center;gap:8px;padding:8px 0;border-top:1px solid var(--hair);font-size:12px}
 .pr:first-of-type{border-top:0}
@@ -181,8 +185,36 @@ kbd{font:inherit;font-size:10px;border:1px solid var(--hair);padding:1px 5px;col
 @media (max-width:760px){#phoneWrap{flex-direction:column;gap:12px}.pside{max-width:90vw;text-align:center}.phone{width:min(380px,92vw);height:min(760px,72vh)}}
 #toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:10px 18px;font-size:12px;letter-spacing:.04em;opacity:0;transition:.25s;pointer-events:none;z-index:9}
 #toast.on{opacity:1;transform:translateX(-50%)}
-@media (max-width:900px){main{grid-template-columns:1fr;grid-template-rows:auto 1fr auto}aside{max-height:30vh}aside.left{border-right:0;border-bottom:1px solid var(--line)}aside.right{border-left:0;border-top:1px solid var(--line);max-height:45vh}#stageWrap{min-height:40vh}.tabs button{padding:0 10px}.wordmark small{display:none}}
-</style>
+@media (max-width:900px){
+  header{gap:10px;padding-left:12px;padding-right:10px}
+  .wordmark{font-size:13px}.wordmark small{display:none}
+  .tabs{margin-left:auto;gap:0}.tabs button{padding:0 7px;font-size:12px}.tabs button span{display:none}
+  #projName,#saveState{display:none}
+  .pm{display:flex!important}
+  main{display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;min-width:0}
+  aside{max-height:none;overflow:visible;padding:10px 12px}
+  aside.left{border-right:0;border-bottom:1px solid var(--line);flex:none;display:flex;align-items:center;gap:10px}
+  aside.left h3,aside.left #libHint{display:none}
+  aside.left .drop{flex:none;padding:10px 12px;font-size:11px}.drop strong{font-size:12px}
+  #thumbs{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:8px;margin:0;flex:1;min-width:0;scrollbar-width:none}#thumbs::-webkit-scrollbar{display:none}
+  .thumb{flex:0 0 56px;height:56px}.thumb .n{display:none}
+  #stageWrap{position:sticky;top:0;z-index:3;height:50dvh;min-height:300px;flex:none;border-bottom:1px solid var(--line)}
+  #empty{gap:14px;padding:20px}#empty .big{font-size:26px}
+  #phoneBtn{top:10px;right:10px;padding:7px 10px}
+  .hint{font-size:10px;right:12px;bottom:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  aside.right{border-left:0;flex:none;display:block;overflow:visible}
+  aside.right .scroll{overflow:visible;padding:12px}
+  aside.right .foot{position:sticky;bottom:0;z-index:4}
+  input[type=range]{width:110px}
+  #phoneWrap{flex-direction:column;justify-content:flex-start;gap:10px;padding:12px 12px calc(12px + env(safe-area-inset-bottom));overflow-y:auto}
+  .pside{max-width:94vw;text-align:center;flex:none;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 12px}.pside h2{font-size:15px;margin:0}.pside p{display:none}.pside .btn{margin:0;padding:8px 14px;width:auto}
+  .phone{width:min(340px,92vw);height:min(700px,calc(100dvh - 90px));flex:none;border-radius:38px;padding:9px}.screen{border-radius:30px}
+}
+@media (max-width:480px){
+  header{gap:6px;padding-left:10px;padding-right:8px}.wordmark{font-size:12px;letter-spacing:-.03em}
+  .tabs button{padding:0 6px;font-size:11px}.iconbtn{width:26px;height:26px;font-size:11px}
+  #stageWrap{height:46dvh;min-height:260px}
+}</style>
 </head>
 <body>
 <header>
@@ -209,6 +241,7 @@ kbd{font:inherit;font-size:10px;border:1px solid var(--hair);padding:1px 5px;col
 </div>
 <div class="pop" id="projPop" hidden>
   <h3>Projects <em id="projCount"></em></h3>
+  <div class="row pm" style="display:none;margin-top:0"><label>Name</label><input id="projNameM" value="Untitled" spellcheck="false" style="background:var(--field);border:1px solid var(--hair);color:var(--ink);padding:5px 8px;font-size:12px;width:170px"></div>
   <div id="projList"></div>
   <div class="btnrow"><button class="btn ghost" id="projNew">New project</button><button class="btn ghost" id="projDup">Duplicate</button></div>
   <div class="btnrow"><button class="btn ghost" id="projExport">Export project</button><button class="btn ghost" id="projImport">Import project</button></div>
@@ -375,7 +408,7 @@ kbd{font:inherit;font-size:10px;border:1px solid var(--hair);padding:1px 5px;col
 <div id="toast"></div>
 
 <script>
-const VERSION='1.1.0';
+const VERSION='1.2.0';
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); // every user-supplied string that goes into innerHTML passes through this
 window.addEventListener('error',e=>{ console.error(e.error||e.message); toast('Something went wrong: '+(e.message||'unknown error')); });
@@ -488,7 +521,7 @@ function setMode(m){
   renderLibrary(); refreshSurfUI(); refreshTextUI(); draw();
 }
 $$('.tabs button').forEach(b=>b.onclick=()=>setMode(b.dataset.mode));
-$$('.look').forEach(sel=>{ for(const k in LOOKS){const o=document.createElement('option');o.value=LOOKS[k];o.textContent=k;sel.appendChild(o);} });
+$$('.look').forEach(sel=>{ for(const k in LOOKS){const o=document.createElement('option');o.value=LOOKS[k];o.textContent=k;sel.appendChild(o);} sel.addEventListener('change',()=>{ if(sel.value!=='none'&&!('filter' in document.createElement('canvas').getContext('2d'))) toast('Looks need a newer browser (Safari 18 or Chrome); exports here will not include the look'); }); });
 function seg(id,cb){ $$(`#${id} button`).forEach(b=>b.onclick=()=>{ $$(`#${id} button`).forEach(x=>x.classList.toggle('active',x===b)); cb(b.dataset.v); draw(); }); }
 function setSeg(id,v){ $$(`#${id} button`).forEach(x=>x.classList.toggle('active',x.dataset.v===String(v))); }
 function range(id,cb,fmt=v=>v){ const el=$('#'+id),out=$('#'+id+'O'); el.oninput=()=>{cb(+el.value); if(out)out.textContent=fmt(+el.value); draw();}; }
@@ -857,9 +890,21 @@ function hitCell(mx,my){
 }
 
 /* ---------- interaction ---------- */
-let dragging=null;
+let dragging=null; const ptrs=new Map(); let pinch=null;
+function pinchTarget(mid){ // what a two-finger pinch on the stage zooms
+  const clamp=(lo,hi)=>v=>Math.max(lo,Math.min(hi,v));
+  if(view.kind==='collage'){ const i=hitCell(mid.x,mid.y), c=state.col.cells[i]; if(!c)return null; state.col.sel=i; return {get:()=>c.zoom,set:v=>{c.zoom=clamp(1,4)(v);}}; }
+  if(!view.kind)return null;
+  const cp=stageToComp(mid.x,mid.y);
+  if(cp&&cp.slot&&cp.slot.kind!=='main'){ const ex=state.car[cp.slot.kind]; return {get:()=>ex.zoom,set:v=>{ex.zoom=clamp(1,3)(v); setR(cp.slot.kind+'Zoom',ex.zoom,zoomFmt);}}; }
+  const st=view.kind==='carousel'?state.car:state.grid, id=view.kind==='carousel'?'carZoom':'gridZoom';
+  return {get:()=>st.zoom,set:v=>{st.zoom=clamp(1,3)(v); setR(id,st.zoom,zoomFmt);}};
+}
 stage.addEventListener('pointerdown',e=>{
   const r=stage.getBoundingClientRect(), mx=e.clientX-r.left, my=e.clientY-r.top;
+  ptrs.set(e.pointerId,{x:mx,y:my}); stage.setPointerCapture(e.pointerId);
+  if(ptrs.size===2){ dragging=null; guides=null; stage.classList.remove('grabbing'); const [a,b]=[...ptrs.values()]; const t=pinchTarget({x:(a.x+b.x)/2,y:(a.y+b.y)/2}); pinch=t?{d0:Math.max(10,Math.hypot(a.x-b.x,a.y-b.y)),z0:t.get(),target:t}:null; return; }
+  if(ptrs.size>2)return;
   const cp=view.kind?stageToComp(mx,my):null;
   if(cp){ const ti=hitText(cp.host.texts,cp.x,cp.y,cp.W,cp.H);
     if(ti>=0){ if(cp.slot&&view.kind==='carousel'){state.car.surf=cp.slot.kind;refreshSurfUI();} cp.host.selT=ti; dragging={text:ti,host:cp.host,W:cp.W,H:cp.H,x:mx,y:my}; stage.setPointerCapture(e.pointerId); stage.classList.add('grabbing'); refreshTextUI(); draw(); return; } }
@@ -879,8 +924,11 @@ stage.addEventListener('pointerdown',e=>{
   }
 });
 stage.addEventListener('pointermove',e=>{
+  const r=stage.getBoundingClientRect(), mx=e.clientX-r.left, my=e.clientY-r.top;
+  if(ptrs.has(e.pointerId)) ptrs.set(e.pointerId,{x:mx,y:my});
+  if(pinch){ if(ptrs.size>=2){ const [a,b]=[...ptrs.values()]; pinch.target.set(pinch.z0*Math.hypot(a.x-b.x,a.y-b.y)/pinch.d0); draw(); } return; }
   if(!dragging)return;
-  const r=stage.getBoundingClientRect(), mx=e.clientX-r.left, my=e.clientY-r.top, dx=mx-dragging.x, dy=my-dragging.y;
+  const dx=mx-dragging.x, dy=my-dragging.y;
   dragging.x=mx; dragging.y=my;
   if(dragging.text!=null){ const t=dragging.host.texts[dragging.text], {W,H}=dragging, k=view.kind==='collage'?view.s:view.row.k;
     let nx=t.x+dx/k/W, ny=t.y+dy/k/H; guides={host:dragging.host.texts,x:null,y:null};
@@ -905,7 +953,7 @@ stage.addEventListener('pointermove',e=>{
   }
   draw();
 });
-const endDrag=()=>{ if(dragging){dragging=null;stage.classList.remove('grabbing'); if(guides){guides=null;draw();}} };
+const endDrag=e=>{ if(e&&e.pointerId!=null)ptrs.delete(e.pointerId); if(ptrs.size<2)pinch=null; if(dragging){dragging=null;stage.classList.remove('grabbing'); if(guides){guides=null;draw();}} };
 stage.addEventListener('pointerup',endDrag); stage.addEventListener('pointercancel',endDrag);
 stage.addEventListener('wheel',e=>{
   e.preventDefault(); const f=e.deltaY<0?1.04:1/1.04;
@@ -969,13 +1017,13 @@ async function saveProject(){
   if(!state.photos.length&&!project.id)return setSaved('');
   if(!project.id)project.id='p'+Date.now().toString(36);
   try{ await txp('readwrite',st=>st.put({id:project.id,name:project.name,updated:Date.now(),state:snap(),photos:state.photos.map(p=>({name:p.name,blob:p.blob}))}));
-    try{localStorage.setItem('gs-current',project.id);}catch(e){} setSaved('Saved'); }
+    try{localStorage.setItem('gs-current',project.id);}catch(e){} setSaved('Saved'); if(!saveProject.persisted){ saveProject.persisted=true; navigator.storage?.persist?.().catch(()=>{}); } }
   catch(e){ console.warn('save failed',e); setSaved('Not saved'); if(e&&(e.name==='QuotaExceededError'||/quota/i.test(e.message||'')))toast('Browser storage is full. Delete old projects from the ≡ menu.'); }
 }
 function clearPhotos(){ state.photos.forEach(p=>URL.revokeObjectURL(p.url)); state.photos=[]; state.active=-1; state.col.cells.forEach(c=>c.photo=-1); }
 async function loadProject(id){
   const rec=await txp('readonly',st=>st.get(id)); if(!rec)return false;
-  restoring=true; clearPhotos(); project={id:rec.id,name:rec.name}; $('#projName').value=rec.name;
+  restoring=true; clearPhotos(); project={id:rec.id,name:rec.name}; $('#projName').value=rec.name; $('#projNameM').value=rec.name;
   await Promise.all(rec.photos.map(ph=>new Promise(res=>{ const url=URL.createObjectURL(ph.blob), img=new Image(), entry={img,url,name:ph.name,ready:false,blob:ph.blob}; state.photos.push(entry); img.onload=()=>{entry.img=workingImage(img);entry.ready=true;res();}; img.onerror=res; img.src=url; })));
   let st={}; try{ st=JSON.parse(rec.state); }catch(e){} applySnap(sanitizeSnap(st)); hist=[snap()]; hi=0; restoring=false; renderLibrary(); draw(); setSaved('Saved');
   try{localStorage.setItem('gs-current',project.id);}catch(e){} return true;
@@ -1019,7 +1067,7 @@ async function importProjectZip(blob){
   const list=(Array.isArray(o.photos)?o.photos:[]).slice(0,80); const files=[];
   for(const ph of list){ const f=typeof ph?.file==='string'&&/^photos\/[\w.\-]+$/.test(ph.file)?z.file(ph.file):null; if(!f)continue; const b=await f.async('blob'); if(b.size>80*1024*1024)continue;
     const name=vStr(ph.name,'photo',120).replace(/[\/\\]/g,'_'); files.push(new File([b],name,{type:b.type||'image/jpeg'})); }
-  restoring=true; clearPhotos(); project={id:null,name:vStr(o.name,'Imported project',80)||'Imported project'}; $('#projName').value=project.name;
+  restoring=true; clearPhotos(); project={id:null,name:vStr(o.name,'Imported project',80)||'Imported project'}; $('#projName').value=project.name; $('#projNameM').value=project.name;
   await Promise.all(files.map(f=>new Promise(res=>{ const url=URL.createObjectURL(f), img=new Image(), entry={img,url,name:f.name,ready:false,blob:f}; state.photos.push(entry); img.onload=()=>{entry.img=workingImage(img);entry.ready=true;res();}; img.onerror=()=>{ const i=state.photos.indexOf(entry); if(i>=0){URL.revokeObjectURL(url);state.photos.splice(i,1);} res(); }; img.src=url; })));
   applySnap(sanitizeSnap(o.state)); hist=[snap()]; hi=0; restoring=false; renderLibrary(); draw(); scheduleSave();
   return files.length;
@@ -1027,8 +1075,9 @@ async function importProjectZip(blob){
 $('#projExport').onclick=async()=>{ $('#projPop').hidden=true; if(!state.photos.length)return toast('Nothing to export yet'); try{ await saveBlob(await projectToZip(),(project.name||'project').replace(/[^\w.\-]+/g,'-')+'.gramstudio.zip'); toast('Project exported'); }catch(e){ toast('Export failed: '+e.message); } };
 $('#projImport').onclick=()=>{ $('#projPop').hidden=true; $('#projFile').click(); };
 $('#projFile').onchange=async e=>{ const f=e.target.files[0]; e.target.value=''; if(!f)return; try{ const n=await importProjectZip(f); toast(`Imported ${project.name} with ${n} photo${n===1?'':'s'}`); }catch(err){ restoring=false; toast('Import failed: '+err.message); } };
-function newProject(){ restoring=true; clearPhotos(); project={id:null,name:'Untitled'}; $('#projName').value='Untitled'; applySnap(JSON.parse(DEFAULT)); hist=[DEFAULT]; hi=0; restoring=false; try{localStorage.removeItem('gs-current');}catch(e){} setSaved(''); renderLibrary(); draw(); }
-$('#projName').oninput=e=>{ project.name=e.target.value.trim()||'Untitled'; scheduleSave(); };
+function newProject(){ restoring=true; clearPhotos(); project={id:null,name:'Untitled'}; $('#projName').value='Untitled'; $('#projNameM').value='Untitled'; applySnap(JSON.parse(DEFAULT)); hist=[DEFAULT]; hi=0; restoring=false; try{localStorage.removeItem('gs-current');}catch(e){} setSaved(''); renderLibrary(); draw(); }
+$('#projName').oninput=e=>{ project.name=e.target.value.trim()||'Untitled'; $('#projNameM').value=e.target.value; scheduleSave(); };
+$('#projNameM').oninput=e=>{ project.name=e.target.value.trim()||'Untitled'; $('#projName').value=e.target.value; scheduleSave(); };
 $('#projBtn').onclick=async()=>{ const pop=$('#projPop'); if(!pop.hidden){pop.hidden=true;return;} await renderProjects(); pop.hidden=false; };
 document.addEventListener('pointerdown',e=>{ if(!e.target.closest('#projPop,#projBtn')) $('#projPop').hidden=true; if(!e.target.closest('#aboutPop,#aboutBtn')) $('#aboutPop').hidden=true; });
 $('#ver').textContent='v'+VERSION;
@@ -1049,7 +1098,7 @@ async function renderProjects(){
     box.appendChild(d); });
 }
 $('#projNew').onclick=()=>{ $('#projPop').hidden=true; newProject(); toast('New project'); };
-$('#projDup').onclick=async()=>{ $('#projPop').hidden=true; if(!state.photos.length)return toast('Nothing to duplicate'); project={id:null,name:project.name+' copy'}; $('#projName').value=project.name; await saveProject(); toast('Duplicated as '+project.name); };
+$('#projDup').onclick=async()=>{ $('#projPop').hidden=true; if(!state.photos.length)return toast('Nothing to duplicate'); project={id:null,name:project.name+' copy'}; $('#projName').value=project.name; $('#projNameM').value=project.name; await saveProject(); toast('Duplicated as '+project.name); };
 
 /* ---------- phone mockup ---------- */
 const ICON={home:'<svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg>',search:'<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>',plus:'<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M12 8v8M8 12h8"/></svg>',reel:'<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M3 9h18M9 3l3 6M15 3l3 6M10 13l5 3-5 3z"/></svg>',user:'<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>',heart:'<svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9z"/></svg>',comment:'<svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 21l1.9-5.4A8 8 0 1 1 21 12z"/></svg>',send:'<svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></svg>',save:'<svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg>',grid:'<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>',tag:'<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="11" r="2.5"/><path d="M8 17c1-2 7-2 8 0"/></svg>'};
