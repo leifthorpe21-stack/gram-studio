@@ -6,7 +6,7 @@ A layout tool for Instagram: seamless carousels, profile-grid splits, collages, 
 
 - **Carousel** – split one wide photo into slides that line up edge to edge. Styles: Seamless, Peek-through (a matte window over a continuous photo) and Zoom-in (each slide a tighter crop). Optional cover and end slides, matte frames.
 - **Grid** – cut a photo into 4:5 or 1:1 tiles that reassemble on a profile, numbered in posting order.
-- **Collage** – 16 layouts, fit or fill per cell, edge masks (torn paper, Polaroid, 35mm film, arch), tilt, looks.
+- **Collage** – 16 layouts, fit or fill per cell, edge masks (torn paper, instant-print frame, 35mm film, arch), tilt, looks.
 - **Text** – layers with presets, fonts, outline, shadow, backdrops, snapping; captions can run across slides.
 - **Phone preview** – feed post with swipe, profile grid, or story view.
 - **Projects** – autosaved in the browser (IndexedDB), export and import as a `.gramstudio.zip` for backups or another device, undo/redo, light and dark themes, JPEG or PNG export.
