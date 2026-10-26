@@ -172,33 +172,48 @@ kbd{font:inherit;font-size:10px;border:1px solid var(--hair);padding:1px 5px;col
 @media (max-width:760px){#phoneWrap{flex-direction:column;gap:12px}.pside{max-width:90vw;text-align:center}.phone{width:min(380px,92vw);height:min(760px,72vh)}}
 #toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:10px 18px;font-size:12px;letter-spacing:.04em;opacity:0;transition:.25s;pointer-events:none;z-index:9}
 #toast.on{opacity:1;transform:translateX(-50%)}
+#sheet,#mtabs{display:none}
 @media (max-width:900px){
-  header{gap:10px;padding-left:12px;padding-right:10px}
+  header{gap:8px;padding-left:12px;padding-right:8px}
   .wordmark{font-size:13px}.wordmark small{display:none}
   .tabs{margin-left:auto;gap:0}.tabs button{padding:0 7px;font-size:12px}.tabs button span{display:none}
   #projName,#saveState{display:none}
   .pm{display:flex!important}
-  main{display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;min-width:0}
-  aside{max-height:none;overflow:visible;padding:10px 12px}
-  aside.left{border-right:0;border-bottom:1px solid var(--line);flex:none;display:flex;align-items:center;gap:10px}
-  aside.left h3,aside.left #libHint{display:none}
-  aside.left .drop{flex:none;padding:10px 12px;font-size:11px}.drop strong{font-size:12px}
-  #thumbs{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:8px;margin:0;flex:1;min-width:0;scrollbar-width:none}#thumbs::-webkit-scrollbar{display:none}
-  .thumb{flex:0 0 56px;height:56px}.thumb .n{display:none}
-  #stageWrap{position:sticky;top:0;z-index:3;height:50dvh;min-height:300px;flex:none;border-bottom:1px solid var(--line)}
+  main{display:block;position:relative;flex:1;min-height:0}
+  aside.left,aside.right{display:none}
+  #stageWrap{position:absolute;left:0;right:0;top:0;bottom:calc(56px + env(safe-area-inset-bottom));transition:bottom .25s}
+  body.sheet-open #stageWrap{bottom:calc(46dvh + 56px + env(safe-area-inset-bottom))}
   #empty{gap:14px;padding:20px}#empty .big{font-size:26px}
-  #phoneBtn{top:10px;right:10px;padding:7px 10px}
+  #phoneBtn{display:none}
   .hint{font-size:10px;right:12px;bottom:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  aside.right{border-left:0;flex:none;display:block;overflow:visible}
-  aside.right .scroll{overflow:visible;padding:12px}
-  aside.right .foot{position:sticky;bottom:0;z-index:4}
-  input[type=range]{width:110px}
+  #mtabs{display:flex;position:fixed;left:0;right:0;bottom:0;height:calc(56px + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);background:var(--bg);border-top:1px solid var(--line);z-index:7}
+  #mtabs button{flex:1;background:none;border:0;color:var(--muted);font-size:10px;letter-spacing:.06em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:0;min-width:0}
+  #mtabs button svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  #mtabs button.active{color:var(--ink)}
+  #sheet{display:flex;flex-direction:column;position:fixed;left:0;right:0;bottom:calc(56px + env(safe-area-inset-bottom));height:46dvh;background:var(--bg);border-top:1px solid var(--line);transform:translateY(110%);transition:transform .25s,height .25s;z-index:6;box-shadow:0 -10px 30px rgba(0,0,0,.08)}
+  #sheet.open{transform:none}#sheet.tall{height:86dvh}
+  #sheet .handle{display:flex;align-items:center;gap:10px;padding:8px 14px 6px;touch-action:none;cursor:grab;flex:none}
+  #sheet .grip{width:36px;height:4px;border-radius:2px;background:var(--hair);margin:0 auto;position:absolute;left:50%;top:6px;transform:translateX(-50%)}
+  #sheet .handle b{font-size:10px;letter-spacing:.14em;text-transform:uppercase;margin-top:8px}
+  #sheetClose{margin-left:auto;margin-top:8px;background:none;border:1px solid var(--line);color:var(--ink);width:26px;height:26px;border-radius:50%;font-size:14px;cursor:pointer;padding:0}
+  #sheet .panes{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:4px 14px 20px}
+  #sheet .pane{display:none}#sheet .pane.active{display:block}
+  #sheet .panel{display:none}#sheet .panel.active{display:block}
+  #sheet .sec:first-child{padding-top:4px}
+  #sheet .drop{padding:14px;margin-bottom:12px}
+  #sheet #thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  #sheet #libHint{margin-top:10px}
+  #sheet .foot{border-top:0;padding:4px 0 0}
+  #sheet #secText .row:first-child{margin-top:0}
+  input[type=range]{width:120px}
   #phoneWrap{flex-direction:column;justify-content:flex-start;gap:10px;padding:12px 12px calc(12px + env(safe-area-inset-bottom));overflow-y:auto}
   .pside{max-width:94vw;text-align:center;flex:none;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 12px}.pside h2{font-size:15px;margin:0}.pside p{display:none}.pside .btn{margin:0;padding:8px 14px;width:auto}
   .phone{width:min(340px,92vw);height:min(700px,calc(100dvh - 90px));flex:none;border-radius:38px;padding:9px}.screen{border-radius:30px}
 }
 @media (max-width:480px){
   header{gap:6px;padding-left:10px;padding-right:8px}.wordmark{font-size:12px;letter-spacing:-.03em}
+  .tabs button{padding:0 6px;font-size:11px}.iconbtn{width:26px;height:26px;font-size:11px}
+}
   .tabs button{padding:0 6px;font-size:11px}.iconbtn{width:26px;height:26px;font-size:11px}
   #stageWrap{height:46dvh;min-height:260px}
 }</style>
@@ -350,7 +365,7 @@ kbd{font:inherit;font-size:10px;border:1px solid var(--hair);padding:1px 5px;col
       </div>
 
       <!-- TEXT -->
-      <div class="sec">
+      <div class="sec" id="secText">
         <h3>Text &amp; captions</h3>
         <div class="row" id="surfRow" hidden><label>Place on</label><div class="seg" id="surfSeg" style="width:190px"><button data-v="main" class="active">Slides</button><button data-v="cover">Cover</button><button data-v="end">End</button></div></div>
         <div class="presets" id="txtPresets">
@@ -381,21 +396,37 @@ kbd{font:inherit;font-size:10px;border:1px solid var(--hair);padding:1px 5px;col
         <p class="note">Drag text on the preview. Arrow keys nudge it, <kbd>⇧</kbd> for bigger steps. In Carousel a caption can run across slides.</p>
       </div>
 
-      <div class="sec">
+      <div class="sec" id="secShortcuts">
         <h3>Shortcuts</h3>
         <p class="note"><kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> switch modes · <kbd>P</kbd> phone preview · <kbd>⌘E</kbd> export · <kbd>⌘Z</kbd> undo · <kbd>⇧⌘Z</kbd> redo · <kbd>⌫</kbd> delete selected · <kbd>Esc</kbd> deselect</p>
       </div>
     </div>
-    <div class="foot">
+    <div class="foot" id="foot">
       <div class="row" style="margin-top:0"><label>Format</label><select id="fmt"><option value="jpg">JPEG</option><option value="png">PNG</option></select><input type="range" id="qual" min="60" max="100" value="95" style="width:80px" title="JPEG quality"><output id="qualO">95</output></div>
       <button class="btn" id="exportBtn">Export slides</button>
     </div>
   </aside>
 </main>
+<div id="sheet" aria-label="Controls">
+  <div class="handle" id="sheetHandle"><span class="grip"></span><b id="sheetTitle"></b><button id="sheetClose" aria-label="Close">×</button></div>
+  <div class="panes">
+    <div class="pane" data-pane="photos"></div>
+    <div class="pane" data-pane="edit"></div>
+    <div class="pane" data-pane="text"></div>
+    <div class="pane" data-pane="export"></div>
+  </div>
+</div>
+<nav id="mtabs" aria-label="Sections">
+  <button data-pane="photos"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 16l-5-5-8 8"/></svg>Photos</button>
+  <button data-pane="edit"><svg viewBox="0 0 24 24"><path d="M4 20h4l10-10-4-4L4 16z"/><path d="M12 8l4 4"/></svg>Edit</button>
+  <button data-pane="text"><svg viewBox="0 0 24 24"><path d="M5 6h14M12 6v13M9 19h6"/></svg>Text</button>
+  <button data-pane="export"><svg viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5"/><path d="M4 19h16"/></svg>Export</button>
+  <button id="mPreview"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg>Preview</button>
+</nav>
 <div id="toast"></div>
 
 <script>
-const VERSION='1.2.0';
+const VERSION='1.3.0';
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); // every user-supplied string that goes into innerHTML passes through this
 window.addEventListener('error',e=>{ console.error(e.error||e.message); toast('Something went wrong: '+(e.message||'unknown error')); });
@@ -465,6 +496,7 @@ function addFiles(files){
     img.src=url;
   });
   toast(list.length===1?'1 photo added':`${list.length} photos added`);
+  if(mobileMQ.matches&&paneName==='photos'&&state.mode!=='collage'&&!window.__noAutoPane) setTimeout(()=>{ if(paneName==='photos'&&$('#sheet').classList.contains('open')) openPane('edit'); },600);
 }
 const MAX_EDGE=3600; // photos are kept in memory no larger than this on their long edge; the original file is still saved
 function workingImage(img){
@@ -1184,7 +1216,37 @@ function exportCollage(){
   const c=collageCanvas(state.col.scale);
   deliver([{name:`collage-${state.col.ratio.replace(':','x')}-${Date.now()%100000}.${state.fmt}`,canvas:c}],'collage','Collage exported');
 }
-refreshSurfUI(); refreshTextUI(); renderLibrary(); fit();
+/* ---------- mobile layout: controls move into a bottom sheet ---------- */
+const mobileMQ=matchMedia('(max-width:900px)'); const homes=new Map();
+const pane=n=>$(`#sheet .pane[data-pane="${n}"]`);
+function moveTo(node,target){ if(!homes.has(node)) homes.set(node,{parent:node.parentNode,index:[...node.parentNode.children].indexOf(node)}); target.appendChild(node); }
+function restoreAll(){ [...homes.entries()].sort((a,b)=>a[1].index-b[1].index).forEach(([node,h])=>h.parent.insertBefore(node,h.parent.children[h.index]||null)); homes.clear(); }
+const PANE_TITLE={photos:'Photos',edit:'Edit',text:'Text & captions',export:'Export'};
+let paneName=null;
+function openPane(n){ if(paneName===n&&$('#sheet').classList.contains('open')) return closeSheet();
+  paneName=n; $$('#sheet .pane').forEach(p=>p.classList.toggle('active',p.dataset.pane===n)); $$('#mtabs button').forEach(b=>b.classList.toggle('active',b.dataset.pane===n));
+  $('#sheetTitle').textContent=(n==='edit'||n==='text')?'':PANE_TITLE[n]; // those panes carry their own section headings
+  $('#sheet').classList.add('open'); document.body.classList.add('sheet-open'); $('#sheet .panes').scrollTop=0; }
+function closeSheet(){ $('#sheet').classList.remove('open','tall'); document.body.classList.remove('sheet-open'); $$('#mtabs button').forEach(b=>b.classList.remove('active')); }
+function applyLayout(){
+  if(mobileMQ.matches){ document.body.classList.add('mobile');
+    moveTo($('#drop'),pane('photos')); moveTo($('#thumbs'),pane('photos')); moveTo($('#libHint'),pane('photos'));
+    $$('.panel').forEach(p=>moveTo(p,pane('edit'))); moveTo($('#secText'),pane('text')); moveTo($('#foot'),pane('export'));
+    if(!state.photos.length) openPane('photos');
+  } else { document.body.classList.remove('mobile'); restoreAll(); closeSheet(); }
+  fit();
+}
+$$('#mtabs button[data-pane]').forEach(b=>b.onclick=()=>openPane(b.dataset.pane));
+$('#mPreview').onclick=()=>{ closeSheet(); openPhone(); };
+$('#sheetClose').onclick=closeSheet;
+(()=>{ const h=$('#sheetHandle'); let sd=null;
+  h.addEventListener('pointerdown',e=>{ sd={y:e.clientY,moved:false}; h.setPointerCapture(e.pointerId); });
+  h.addEventListener('pointermove',e=>{ if(!sd)return; const dy=e.clientY-sd.y; if(Math.abs(dy)>12)sd.moved=true; });
+  h.addEventListener('pointerup',e=>{ if(!sd)return; const dy=e.clientY-sd.y; sd=null; const sh=$('#sheet');
+    if(dy>70){ sh.classList.contains('tall')?sh.classList.remove('tall'):closeSheet(); } else if(dy<-70){ sh.classList.add('tall'); } else if(!e.target.closest('#sheetClose')){ sh.classList.toggle('tall'); } });
+})();
+mobileMQ.addEventListener('change',applyLayout);
+refreshSurfUI(); refreshTextUI(); renderLibrary(); applyLayout();
 hist=[DEFAULT]; hi=0;
 if('serviceWorker' in navigator&&location.protocol==='https:'&&document.querySelector('link[rel=manifest]')) navigator.serviceWorker.register('sw.js').catch(()=>{});
 (async()=>{ try{ const id=localStorage.getItem('gs-current'); if(id&&await loadProject(id)) toast('Restored '+project.name); }catch(e){} })();

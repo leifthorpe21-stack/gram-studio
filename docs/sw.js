@@ -1,6 +1,6 @@
 // Gram Studio service worker: network first, cached copy when offline.
 // CACHE is stamped by build.py so every release invalidates the previous cache.
-const CACHE = 'gram-studio-4ff38b5291a2';
+const CACHE = 'gram-studio-225ffa215525';
 const CORE = ['./', './index.html', './manifest.webmanifest', './icon.svg', './icon-192.png', './icon-512.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE))); self.skipWaiting(); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k))))); self.clients.claim(); });
