@@ -25,9 +25,20 @@ html = html[:tag.start()] + '<script>' + lib.decode('utf-8') + '</script>' + htm
 hashes = []
 for m in re.finditer(r'<script>(.*?)</script>', html, re.S):
     hashes.append("'sha256-" + base64.b64encode(hashlib.sha256(m.group(1).encode('utf-8')).digest()).decode() + "'")
-csp = ("default-src 'none'; script-src " + ' '.join(hashes) + "; style-src 'unsafe-inline'; img-src blob: data:; "
-       "connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'")
+csp = ("default-src 'none'; script-src " + ' '.join(hashes) + "; style-src 'unsafe-inline'; img-src 'self' blob: data:; "
+       "connect-src 'self'; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'")
 html = html.replace('<meta charset="UTF-8">', '<meta charset="UTF-8">\n<meta http-equiv="Content-Security-Policy" content="' + csp + '">', 1)
 OUT.parent.mkdir(parents=True, exist_ok=True)
 OUT.write_text(html, encoding='utf-8')
 print(f'wrote {OUT} ({OUT.stat().st_size//1024} KB), {len(hashes)} inline script hash(es)')
+
+# PWA files: manifest, icons and a service worker whose cache name changes with every build
+PWA = pathlib.Path(__file__).with_name('pwa')
+if PWA.is_dir() and OUT.name == 'index.html':
+    stamp = hashlib.sha256(html.encode('utf-8')).hexdigest()[:12]
+    for f in PWA.iterdir():
+        data = f.read_bytes()
+        if f.name == 'sw.js':
+            data = data.replace(b'__BUILD__', stamp.encode())
+        (OUT.parent / f.name).write_bytes(data)
+    print(f'copied PWA files, service-worker cache stamp {stamp}')
