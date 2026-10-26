@@ -1,0 +1,53 @@
+# Gram Studio
+
+A layout tool for Instagram: seamless carousels, profile-grid splits, collages, captions and a phone preview. One HTML file, no server, no accounts. Photos never leave the browser.
+
+## Features
+
+- **Carousel** – split one wide photo into slides that line up edge to edge. Styles: Seamless, Peek-through (a matte window over a continuous photo) and Zoom-in (each slide a tighter crop). Optional cover and end slides, matte frames.
+- **Grid** – cut a photo into 4:5 or 1:1 tiles that reassemble on a profile, numbered in posting order.
+- **Collage** – 16 layouts, fit or fill per cell, edge masks (torn paper, Polaroid, 35mm film, arch), tilt, looks.
+- **Text** – layers with presets, fonts, outline, shadow, backdrops, snapping; captions can run across slides.
+- **Phone preview** – feed post with swipe, profile grid, or story view.
+- **Projects** – autosaved in the browser (IndexedDB), undo/redo, light and dark themes, JPEG or PNG export.
+
+## Run it
+
+Open `docs/index.html` in a modern browser (Chrome, Edge, Safari 17+, Firefox). Everything is local. On a phone, open the same file or a hosted copy in the browser; exports go to the share sheet or Files.
+
+## Host it
+
+`docs/index.html` is self-contained. Put it on any static host (GitHub Pages, Netlify, Cloudflare Pages, an S3 bucket). No build step is needed at deploy time, no backend, no environment variables.
+
+**GitHub Pages:** push this repository, then in the repository settings open *Pages*, choose *Deploy from a branch*, pick `main` and the `/docs` folder, and save. The site appears at `https://<your-user>.github.io/<repo>/` within a minute or two. Re-run `python3 build.py` and commit `docs/index.html` whenever you change the source.
+
+Recommended response headers if your host lets you set them (the file already ships an equivalent Content Security Policy as a meta tag):
+
+```
+Content-Security-Policy: default-src 'none'; script-src 'sha256-…' (see docs/index.html); style-src 'unsafe-inline'; img-src blob: data:; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'; frame-ancestors 'none'
+X-Content-Type-Options: nosniff
+Referrer-Policy: no-referrer
+Permissions-Policy: camera=(), microphone=(), geolocation=()
+```
+
+## Build
+
+`gram-studio.html` is the source; it loads JSZip from cdnjs with Subresource Integrity. `build.py` inlines the pinned copy from `vendor/`, verifies its hash, computes the inline-script hashes and writes `docs/index.html` with the strict CSP.
+
+```bash
+python3 build.py
+```
+
+Bump `VERSION` in the source when you release.
+
+## Privacy and security notes
+
+- No network requests are made by the app itself. The source file fetches one script from cdnjs (with SRI); the release build makes none.
+- Projects, including photo files, are stored in the browser's IndexedDB for that origin only. "About" in the app shows storage use and offers a one-click delete of all data.
+- All user-supplied strings (file names, project names, captions) are escaped before entering HTML.
+- Images are decoded by the browser only; the app accepts image MIME types up to 80 MB, up to 80 photos per project.
+- Not affiliated with Instagram or Meta. The phone preview uses generic icons.
+
+## License
+
+MIT. JSZip is © Stuart Knightley, MIT/GPLv3 dual licensed.
